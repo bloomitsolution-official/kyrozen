@@ -502,7 +502,7 @@
                 <div class="text-sm">Happy Customers</div>
               </div>
               <div class="text-center">
-                <div class="text-2xl font-bold text-[#3ed2e7]">All Time</div>
+                <div class="text-2xl font-bold text-[#3ed2e7]">24/7</div>
                 <div class="text-sm">Customer Support</div>
               </div>
             </div>
@@ -637,7 +637,7 @@
                 <svg class="h-5 w-5 text-[#3ed2e7] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                 </svg>
-                All Time support
+                24/7 support
               </li>
             </ul>
             <a href="#Contact"> <button
@@ -768,7 +768,7 @@
                 <svg class="w-5 h-5 text-[#3ed2e7] mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                 </svg>
-                All Time Support
+                24/7 Support
               </li>
             </ul>
             <a href="#Contact"> <button
@@ -1343,7 +1343,7 @@
                   </div>
                   <div class="ml-4">
                     <h4 class="text-lg font-semibold text-neutral-900">Dedicated Support</h4>
-                    <p class="mt-2 text-neutral-600">All Time priority support and dedicated account management.</p>
+                    <p class="mt-2 text-neutral-600">24/7 priority support and dedicated account management.</p>
                   </div>
                 </div>
               </div>
@@ -1409,8 +1409,10 @@
         </div>
 
         <div class="bg-neutral-800 rounded-2xl p-8 md:p-12 animate__animated animate__fadeInUp">
+
           <form id="bookingForm" class="space-y-8">
             <div class="grid md:grid-cols-2 gap-8">
+              
               <!-- Left Column -->
               <div class="space-y-6">
                 <div>
@@ -1456,8 +1458,8 @@
                     <label class="block text-white mb-2">Duration</label>
                     <select name="duration"
                       class="w-full bg-neutral-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#3ed2e7]">
-                      <option>1 Hour</option>
-                      <option>4 Hours</option>
+
+                      <option>8 Hours</option>
                       <option>1 Day</option>
                       <option>1 Week</option>
                     </select>
@@ -1470,10 +1472,10 @@
                 </div>
 
                 <div>
-                  <label class="block text-white mb-2">Additional Requirements</label>
+                  <label class="block text-white mb-2">Your Information</label>
                   <textarea name="additional-requirements"
                     class="w-full bg-neutral-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#3ed2e7] h-32"
-                    placeholder="Any special requirements..."></textarea>
+                    placeholder="your details..."></textarea>
                 </div>
               </div>
             </div>
@@ -1506,22 +1508,45 @@
         const passengers = document.querySelector('input[name="passengers"]').value;
         const additionalRequirements = document.querySelector('textarea[name="additional-requirements"]').value;
 
-        // Prepare message
-        const message = `Hello, I would like to book a vehicle. Here are the details:\n\n` +
-          `Vehicle Type: ${vehicleType}\n` +
-          `Pickup Location: ${pickupLocation}\n` +
-          `Pickup Date: ${pickupDate}\n` +
-          `Pickup Time: ${pickupTime}\n` +
-          `Duration: ${duration}\n` +
-          `Passengers: ${passengers}\n` +
-          `Additional Requirements: ${additionalRequirements}`;
+        const firstName = ""; // Replace with dynamic value
+        const lastName = "";   // Replace with dynamic value
+        const email = "";  // Replace with dynamic value
+        const phone = "";
 
-        // WhatsApp number (replace with your number)
-        const phoneNumber = "919980716666";  // Replace with the recipient's WhatsApp number
+        const inquiryType = `Vehicle Type: ${vehicleType}, Duration: ${duration}`;
+        const message = `
+    Pickup Location: ${pickupLocation}
+    Pickup Date: ${pickupDate}
+    Pickup Time: ${pickupTime}
+    Passengers: ${passengers}
+    My Details: ${additionalRequirements || "None"}
+  `;
 
-        // Redirect to WhatsApp with the message
-        window.location.href = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+        emailjs.init("aHsPCmALvXEOQHPhL");
+
+        emailjs
+          .send("service_3y3p8ak", "template_0pb8thc", {
+            first_name: firstName,
+            last_name: lastName,
+            email: email,
+            phone: phone,
+            inquiry_type: inquiryType,
+            message: message,
+          })
+          .then(
+            function (response) {
+              console.log("Email sent successfully!", response.status, response.text);
+              alert("Your message has been sent successfully!");
+            },
+            function (error) {
+              console.error("Failed to send email.", error);
+              alert("Failed to send your message. Please try again.");
+            }
+          );
       });
+
+
+
 
 
     </script>
@@ -1594,6 +1619,7 @@
                 Send Message
               </button>
             </form>
+            <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
             <script>
               document.getElementById('contactForm').addEventListener('submit', function (e) {
@@ -1606,30 +1632,31 @@
                 const phone = document.querySelector('input[name="phone"]').value;
                 const inquiryType = document.querySelector('select[name="inquiry-type"]').value;
                 const message = document.querySelector('textarea[name="message"]').value;
-                console.log("FirstName", firstName)
-                console.log("lastName", lastName)
-                console.log("email", email)
-                console.log("phone", phone)
-                console.log("inquiryType", inquiryType)
-                console.log("message", message)
 
-                // Prepare the message
-                const formattedMessage = `
-                *New Inquiry*%0A
-                *First Name:* ${firstName}%0A
-                *Last Name:* ${lastName}%0A
-                *Email:* ${email}%0A
-                *Phone:* ${phone}%0A
-                *Inquiry Type:* ${inquiryType}%0A
-                *Message:*%0A${message}
-              `;
+                emailjs.init("aHsPCmALvXEOQHPhL");
 
-                // WhatsApp number (replace with your WhatsApp number)
-                const phoneNumber = "919980716666";  // Replace with your WhatsApp number
-
-                // Redirect to WhatsApp with the formatted message
-                window.location.href = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(formattedMessage)}`;
+                emailjs
+                  .send("service_3y3p8ak", "template_0pb8thc", {
+                    first_name: firstName,
+                    last_name: lastName,
+                    email: email,
+                    phone: phone,
+                    inquiry_type: inquiryType,
+                    message: message,
+                  })
+                  .then(
+                    function (response) {
+                      console.log("Email sent successfully!", response.status, response.text);
+                      alert("Your message has been sent successfully!");
+                    },
+                    function (error) {
+                      console.error("Failed to send email.", error);
+                      alert("Failed to send your message. Please try again.");
+                    }
+                  );
               });
+
+
             </script>
 
           </div>
@@ -1652,7 +1679,7 @@
                   </div>
                 </div>
 
-                
+
 
                 <div class="flex items-start">
                   <svg class="w-6 h-6 text-[#3ed2e7] mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1770,7 +1797,7 @@
                 </svg>
                 Marathahalli Bangaluru, karnataka - 560037
               </li>
-             
+
               <li class="flex items-center text-gray-400">
                 <svg class="w-5 h-5 mr-2 text-[#3ed2e7]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
