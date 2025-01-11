@@ -1508,6 +1508,19 @@
         const passengers = document.querySelector('input[name="passengers"]').value;
         const additionalRequirements = document.querySelector('textarea[name="additional-requirements"]').value;
 
+     if (!pickupDate || !pickupTime) {
+          alert("Please select a pickup date and time.");
+          return;
+        }
+        if (!additionalRequirements) {
+          alert("Please provide your details.");
+          return;
+        }
+        if (!passengers) {
+          alert("Please enter the number of passengers.");
+          return;
+        }
+
         const firstName = ""; // Replace with dynamic value
         const lastName = "";   // Replace with dynamic value
         const email = "";  // Replace with dynamic value
@@ -1522,10 +1535,10 @@
     My Details: ${additionalRequirements || "None"}
   `;
 
-        emailjs.init("aHsPCmALvXEOQHPhL");
+        emailjs.init("7YM6sOAq_S_eENIYA");
 
         emailjs
-          .send("service_3y3p8ak", "template_0pb8thc", {
+          .send("service_8ve04fh", "template_btn3e2m", {
             first_name: firstName,
             last_name: lastName,
             email: email,
@@ -1632,11 +1645,15 @@
                 const phone = document.querySelector('input[name="phone"]').value;
                 const inquiryType = document.querySelector('select[name="inquiry-type"]').value;
                 const message = document.querySelector('textarea[name="message"]').value;
+                 if(!firstName || !lastName || !email || !phone || !inquiryType || !message) {
+                  alert("Please fill in all fields.");
+                  return; 
+                 }
 
-                emailjs.init("aHsPCmALvXEOQHPhL");
+                emailjs.init("7YM6sOAq_S_eENIYA");
 
                 emailjs
-                  .send("service_3y3p8ak", "template_0pb8thc", {
+                  .send("service_8ve04fh", "template_btn3e2m", {
                     first_name: firstName,
                     last_name: lastName,
                     email: email,
